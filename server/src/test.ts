@@ -7,12 +7,12 @@ import { Room } from "./room";
 export function startGame() {
         const start = new Room("start", "a test room");
     start.entities = [
-        new Entity("box", "a normal box")
+        new SquirrelEntity()
     ]
 
     const end = new Room("end", "the finishing room");
-    const a = new SquirrelEntity()
-    const b = new NutEntity()
+    const a = new SquirrelEntity();
+    const b = new NutEntity();
     
     end.entities = [
         a, b
@@ -20,6 +20,5 @@ export function startGame() {
 
     start.setExit("N", end);  
     console.log(start.printRoom()); 
-    console.log(end.printRoom()); 
     console.log(Entity.feed(a, b)) 
 }

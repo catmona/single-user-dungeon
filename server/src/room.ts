@@ -7,6 +7,7 @@ export class Room {
     public entities?: Entity[];
     private exit = new Array<Room>(4)
     
+    //automatically generated: `r1-"start room"`
     public readonly id: string;
     private static numRooms = 0;
     
@@ -16,6 +17,8 @@ export class Room {
         this.id = `r${++Room.numRooms}-"${name}"`;
     }
     
+    //Sets an exit to a room. It also sets that room's entrance to lead back to 
+    //the current room. This can be disabled by setting oneWay to true.
     public setExit(dir: string, room: Room, oneWay = false): void {
         switch (dir) {
             case "N":
@@ -55,6 +58,8 @@ export class Room {
         }
     }
     
+    //Prints entities one after the other.
+    //TODO: needs a/an formatting and different description for if an entity is inanimate or not.
     public printEntities(): string {
         let out = "";
         this.entities?.forEach(function(e: Entity) {
@@ -64,6 +69,7 @@ export class Room {
         return out;
     }
     
+    //prints the exits to a room like [ North, East, South ]
     public printExits(): string {
         let out = "Possible Exits: \n[ "
         let numExits = 0;
@@ -85,6 +91,7 @@ export class Room {
         return out;
     }
     
+    //prints all the details about a room, for when the user enters it.
     public printRoom(): string {
         return(`${this.name}\n${this.description}\n${this.printEntities()}\n${this.printExits()}`);
     }
