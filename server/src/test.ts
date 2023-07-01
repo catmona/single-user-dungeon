@@ -18,6 +18,8 @@ export function startGame() {
         a, b
     ]
 
-    start.setExit("N", end);   
+    start.setExit("N", end);  
+    console.log(start.printRoom()); 
+    console.log(end.printRoom()); 
     console.log(Entity.feed(a, b)) 
 }

@@ -54,4 +54,29 @@ export class Room {
                 return null;
         }
     }
-}
+    
+    public printExits(): string {
+        let out = "Possible Exits: \n[ "
+        let numExits = 0;
+        
+        for(let i = 0; i < this.exit.length; i++) {
+            if(this.exit[i] != undefined) {
+                numExits++;
+                if(numExits > 1) out += ", ";
+                
+                if(i == 0) out += "North";
+                else if(i == 1) out += "East";
+                else if(i == 2) out += "South";
+                else out += "West";
+            }
+        }
+        
+        if (numExits == 0) out = "No Possible Exits."
+        else out += " ]"
+        return out;
+    }
+    
+    public printRoom(): string {
+        return(`${this.name}\n${this.description}\n${this.printExits()}`);
+    }
+ }
