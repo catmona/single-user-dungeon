@@ -55,6 +55,15 @@ export class Room {
         }
     }
     
+    public printEntities(): string {
+        let out = "";
+        this.entities?.forEach(function(e: Entity) {
+            out += `There is a ${e.name} here.\n`
+        })
+        
+        return out;
+    }
+    
     public printExits(): string {
         let out = "Possible Exits: \n[ "
         let numExits = 0;
@@ -77,6 +86,6 @@ export class Room {
     }
     
     public printRoom(): string {
-        return(`${this.name}\n${this.description}\n${this.printExits()}`);
+        return(`${this.name}\n${this.description}\n${this.printEntities()}\n${this.printExits()}`);
     }
  }
