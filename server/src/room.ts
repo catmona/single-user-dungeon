@@ -13,7 +13,7 @@ export class Room {
     constructor(name: string, desc: string) {
         this.name = name;
         this.description = desc;
-        this.id = `r${++Room.numRooms}-${name}`;
+        this.id = `r${++Room.numRooms}-"${name}"`;
     }
     
     public setExit(dir: string, room: Room, oneWay = false): void {

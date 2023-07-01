@@ -1,3 +1,5 @@
+import { NutEntity } from "./entities/nut";
+import { SquirrelEntity } from "./entities/squirrel";
 import { Entity } from "./entity";
 import { Room } from "./room";
 
@@ -9,9 +11,13 @@ export function startGame() {
     ]
 
     const end = new Room("end", "the finishing room");
+    const a = new SquirrelEntity()
+    const b = new NutEntity()
+    
     end.entities = [
-        new Entity("squirrel", "a normal squirrel")
+        a, b
     ]
 
-    start.setExit("N", end);    
+    start.setExit("N", end);   
+    console.log(Entity.feed(a, b)) 
 }
