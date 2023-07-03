@@ -18,15 +18,23 @@ export class Room {
     }
     
     //returns an entity with a matching alias if it exists
-    public getEntityFromAlias(alias: string): Entity | undefined {
+    public getEntityFromAlias(alias: string, n = 1): Entity | undefined {
         //convert input to lowercase just in case
         alias = alias.toLowerCase();
+        let i = 0;
+        let last = new Entity("", "");
         
-        //check for first occurance of a matching alias
+        //check for "n"th occurance of a matching alias
         this.entities?.forEach(e => {
-            if(e.alias.has(alias)) 
-                return e;
+            if(e.alias.has(alias)) {
+                i++;
+                if(i == n) return e;
+                else last = e;
+            }
         })
+        
+        //if matching entity was found but not the "n"th occurance, return the last matching entity instead
+        if(i > 0) return last;
         
         //if no matching entity was found, return undefined
         return undefined;

@@ -1,4 +1,4 @@
-export abstract class Entity {
+export class Entity {
     public name: string;
     public description: string;
     public content: string;
