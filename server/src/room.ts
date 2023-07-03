@@ -69,7 +69,7 @@ export class Room {
         return out;
     }
     
-    //prints the exits to a room like [ North, East, South ]
+    //prints the exits to a room like [ North, East, South, West ]
     public printExits(): string {
         let out = "Possible Exits: \n[ "
         let numExits = 0;
