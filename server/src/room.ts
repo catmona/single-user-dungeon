@@ -17,6 +17,21 @@ export class Room {
         this.id = `r${++Room.numRooms}-"${name}"`;
     }
     
+    //returns an entity with a matching alias if it exists
+    public getEntityFromAlias(alias: string): Entity | undefined {
+        //convert input to lowercase just in case
+        alias = alias.toLowerCase();
+        
+        //check for first occurance of a matching alias
+        this.entities?.forEach(e => {
+            if(e.alias.has(alias)) 
+                return e;
+        })
+        
+        //if no matching entity was found, return undefined
+        return undefined;
+    }
+    
     //Sets an exit to a room. It also sets that room's entrance to lead back to 
     //the current room. This can be disabled by setting oneWay to true.
     public setExit(dir: string, room: Room, oneWay = false): void {

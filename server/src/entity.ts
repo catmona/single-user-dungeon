@@ -3,16 +3,21 @@ export abstract class Entity {
     public description: string;
     public content: string;
     public is: Record<string, boolean> = {}
+    public alias: Set<string>;
     
     //automatically generated: `e1-"box"`
     public readonly id: string;
     private static numEntities = 0;
     
-    constructor(name: string, desc: string) {
+    constructor(name: string, desc: string, ...aliases: string[]) {
         this.name = name;
         this.description = desc;
         this.content = "";
         this.id = `e${++Entity.numEntities}-"${name}"`
+        
+        //add aliases
+        this.alias = new Set<string>([...aliases]);
+        this.alias.add(name.toLowerCase());
         
         //set all adjectives to false to begin with, except for examineable
         this.is.edible = false; //can be eaten
@@ -20,6 +25,7 @@ export abstract class Entity {
         this.is.examineable = true; //can be looked at to see its description
         this.is.readable = false; //has content that can be read
     }
+    
     
     //static methods for interacting with entities. 
     //TODO: move these to a seperate file?
