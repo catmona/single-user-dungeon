@@ -1,5 +1,6 @@
 import { exit } from "process";
 import { Entity } from "./entity";
+import { UndefinedEntity } from "./globals";
 
 export class Room {
     public name: string;
@@ -18,26 +19,37 @@ export class Room {
     }
     
     //returns an entity with a matching alias if it exists
-    public getEntityFromAlias(alias: string, n = 1): Entity | undefined {
+    public getEntityFromAlias(alias: string, n = 1): Entity {
+        if(!alias) {
+            console.debug("no matching entity found!");
+            return new UndefinedEntity;
+        }
         //convert input to lowercase just in case
         alias = alias.toLowerCase();
         let i = 0;
         let last = new Entity("", "");
+        console.debug(`Looking for entity with alias: ${alias}`)
         
         //check for "n"th occurance of a matching alias
         this.entities?.forEach(e => {
             if(e.alias.has(alias)) {
                 i++;
-                if(i == n) return e;
-                else last = e;
+                last = e;
+                if(i == n) {
+                    return;
+                }
             }
         })
         
         //if matching entity was found but not the "n"th occurance, return the last matching entity instead
-        if(i > 0) return last;
+        if(i > 0) {
+            console.debug(`entity found: ${last.id}`);
+            return last;
+        }
         
         //if no matching entity was found, return undefined
-        return undefined;
+        console.debug("no matching entity found!");
+        return new UndefinedEntity;
     }
     
     //Sets an exit to a room. It also sets that room's entrance to lead back to 

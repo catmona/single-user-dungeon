@@ -3,14 +3,19 @@ import { COMMAND_LIST } from "./globals";
 const MAX_CHARS = 50;
 const MIN_CHARS = 0;
 
-//returns true if the input is a valid command, false otherwise
-export function parseInput(input: string): boolean {
+interface command_data {
+    command: string;
+    args: string[];
+}
+
+//returns {command, args[]}. Command contains "undefined" if an error occurs.
+export function parseInput(input: string): command_data {
     let command = "";
     const args = new Array<string>();
     
     //check length of input against min & max
     if(input.length <= MIN_CHARS || input.length >= MAX_CHARS)
-        return false;
+        return {command: "undefined", args: ["incorrect string entered"]};
     
     //separate input into array split by whitespace
     const inputs = input.split(" ");
@@ -19,19 +24,23 @@ export function parseInput(input: string): boolean {
     let foundCommand = false;
     inputs.forEach(w => {
         if(COMMAND_LIST.has(w)) {
-            if(foundCommand) return false; //too many commands found
+            if(foundCommand) return {command: "undefined", args: ["too many commands entered"]}; //too many commands found
             foundCommand = true;
         }
     })
     
-    if(!foundCommand) return false; //no command found
+    if(!foundCommand) return {command: "undefined", args: ["no valid command found"]}; //no command found
     
     //check input for valid command
     const cmd = COMMAND_LIST.get(inputs[0]);
-    if(cmd == undefined) return false; //first word is not a valid command
+    if(cmd == undefined) return {command: "undefined", args: ["first word isn't a command"]}; //first word is not a valid command
     
     //set command to the valid command name
     command = inputs[0];
+    console.debug(`command found: ${command}`);
+    
+    //trash the command from the input list
+    inputs.shift();
     
     //if command has optional or required arguments, check inputs
     if(cmd.args.required > 0 || cmd.args.optional > 0) {
@@ -44,11 +53,14 @@ export function parseInput(input: string): boolean {
                     case "and":
                     case "with":
                     case "an":
+                    case "the":
                         return; //continue to next word
                     default:
                         break;
                 }
             }
+            
+            //TODO: number for entities. Squirrel.1 for example
             
             //add word to arg list
             args.push(w);
@@ -56,17 +68,10 @@ export function parseInput(input: string): boolean {
             if(foundReq < cmd.args.required) foundReq++;
             else if(foundOpt < cmd.args.optional) foundOpt++;
         })
+        
+        if(foundReq > cmd.args.required || foundOpt > cmd.args.optional) 
+        return {command: "undefined", args: ["too many entities entered"]}; //too many arguments found for given command
     }
     
-    return parseCommand(command, args);
-}
-
-//returns true if parse completes, false otherwise
-function parseCommand(cmd: string, args: string[]): boolean {
-        //get entities from arguments
-        
-    
-        //connect names to entities in room if they exist in the current room
-        
-        return false;
+    return {command, args};
 }
