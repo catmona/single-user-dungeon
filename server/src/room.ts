@@ -78,18 +78,22 @@ export class Room {
         }
     }
     
-    public getExit(dir: string): Room | null {
+    public getExit(dir: string): Room | undefined {
         switch (dir) {
-            case "N":
+            case "n":
+            case "north":
                 return this.exit[0];
-            case "E":
+            case "e":
+            case "east":
                 return this.exit[1];
-            case "S":
+            case "s":
+            case "south":
                 return this.exit[2];
-            case "W":
+            case "w":
+            case "west":
                 return this.exit[3];
             default:
-                return null;
+                return undefined;
         }
     }
     

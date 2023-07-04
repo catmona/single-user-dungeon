@@ -20,6 +20,9 @@ export function parseInput(input: string): command_data {
     //separate input into array split by whitespace
     const inputs = input.split(" ");
     
+    //lowercase first word if it exists
+    if(inputs[0]) inputs[0] = inputs[0].toLowerCase();
+    
     //make sure there isn't more than 1 command entered at once, but at least 1 command
     let foundCommand = false;
     inputs.forEach(w => {

@@ -25,5 +25,5 @@ export function startGame() {
     // console.log(parseCommand("test", { room: start })); 
     // console.log(parseCommand("look", { room: start })); 
     // console.log(parseCommand("look squirrel", { room: start })); 
-    console.log(parseCommand("feed squirrel", { room: start })); 
+    console.log(parseCommand("North", { room: start })); 
 }
