@@ -25,7 +25,7 @@ export default function Test() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         console.debug(`input: ${inputText}`);
-        setOutputText(processText(">> " + inputText, false));
+        setOutputText(processText(inputText, false));
         
         fetch(ENDPOINT + "/api/test", {
             method: 'POST',
@@ -63,9 +63,21 @@ export default function Test() {
         if(color) 
             return colorText(text);
         
+        let container = document.createElement("div");
+        
+        let pre = document.createElement("div");
         let div = document.createElement("div");
+        
+        container.appendChild(pre);
+        container.appendChild(div);
+        
+        pre.className = "inline text-green-400 font-semibold";
+        div.className = "inline";
+        
+        pre.textContent = "\n>>  ";
         div.textContent = text;
-        return div;
+        
+        return container;
     }
     
     //color message using # as seperators
@@ -116,12 +128,12 @@ export default function Test() {
     
     return(
         <div className="m-2">
-            <h1 className="text-lg font-xtrabold">{currentRoomId}</h1>
+            <h1 className="text-lg font-extrabold">{currentRoomId}</h1>
             <div id="output-container" className="block whitespace-pre overflow-y-auto h-80"></div>
-            <form className="mt-2 w-full" onSubmit={handleSubmit}>
-                <label>{`>>`}</label>
-                <input className="text-black ml-2" type="text" value={inputText} onChange={handleChange}/>
+            <form className="mt-8 w-full" onSubmit={handleSubmit}>
+                <label className="w-5 font-semibold text-green-400">{`>>`}</label>
+                <input className="text-white ml-2 bg-transparent focus:outline-none" autoFocus type="text" value={inputText} onChange={handleChange}/>
             </form>
-        </div>
+        </div> 
     )
 }

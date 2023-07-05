@@ -12,7 +12,7 @@ export function startGame(): string {
     start.entities = [
         new SquirrelEntity(),
         new NutEntity(),
-        new SignEntity("@red wow! you can read without glasses!"),
+        new SignEntity("wow! you can read without glasses!"),
     ]
 
     const end = new Room("end", "the finishing room");
