@@ -1,5 +1,5 @@
 export class Entity {
-    public name: string;
+    private name: string;
     public description: string;
     public content: string;
     public is: Record<string, boolean> = {}
@@ -26,6 +26,10 @@ export class Entity {
         this.is.readable = false; //has content that can be read
     }
     
+    public getName(): string {
+        return `#red ${this.name}#`
+    }
+    
     
     //static methods for interacting with entities. 
     //TODO: move these to a seperate file?
@@ -33,7 +37,7 @@ export class Entity {
     //shows the description of an entity.
     public static look(target: Entity): string {
         if(!target.is.examineable)
-            return `You can't see the ${target.name}`
+            return `You can't see the ${target.getName()}`
         
         return target.description;
     }
@@ -42,12 +46,12 @@ export class Entity {
     //TODO: check for inanimate/animate entities, item removal from room, effect from eating, etc.
     public static feed(target: Entity, food: Entity): string {
         if(!target.is.feedable)
-            return `${target.name} doesn't eat food!`;
+            return `${target.getName()} doesn't eat food!`;
         
         if(!food.is.edible)
-            return `${food.name} isn't edible!`; 
+            return `${food.getName()} isn't edible!`; 
        
-        return `${target.name} ate the ${food.name}`;
+        return `${target.getName()} ate the ${food.getName()}`;
             
     }
     
@@ -55,12 +59,12 @@ export class Entity {
     //TODO: multiple pages
     public static read(target: Entity): string {
         if(!target.is.readable)
-            return `You can't read a ${target.name}!`;
+            return `You can't read a ${target.getName()}!`;
         
         if(target.content.length <= 0)
-            return `You tried to read the the ${target.name}, but it's blank!`;
+            return `You tried to read the the ${target.getName()}, but it's blank!`;
             
-        return `You read the ${target.name}.\n${target.content}`;
+        return `You read the ${target.getName()}.\n${target.content}`;
     }
     
 }

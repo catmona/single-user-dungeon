@@ -3,7 +3,7 @@ import { Entity } from "./entity";
 import { UndefinedEntity } from "./globals";
 
 export class Room {
-    public name: string;
+    private name: string;
     public description: string;
     public entities?: Entity[];
     private static roomContainer = new Map<string, Room>();
@@ -22,6 +22,10 @@ export class Room {
     
     public static getRoomById(id: string): Room | undefined {
         return Room.roomContainer.get(id);
+    }
+    
+    public getName(): string {
+        return `#yellow ${this.name}#`
     }
     
     //returns an entity with a matching alias if it exists
@@ -108,7 +112,7 @@ export class Room {
     public printEntities(): string {
         let out = "";
         this.entities?.forEach(function(e: Entity) {
-            out += `There is a ${e.name} here.\n`
+            out += `There is a ${e.getName()} here.\n`
         })
         
         return out;
@@ -116,7 +120,7 @@ export class Room {
     
     //prints the exits to a room like [ North, East, South, West ]
     public printExits(): string {
-        let out = "Possible Exits: \n[ "
+        let out = "Possible Exits: \n#cyan [ "
         let numExits = 0;
         
         for(let i = 0; i < this.exit.length; i++) {
@@ -138,6 +142,6 @@ export class Room {
     
     //prints all the details about a room, for when the user enters it.
     public printRoom(): string {
-        return(`${this.name}\n${this.description}\n${this.printEntities()}\n${this.printExits()}`);
+        return(`${this.getName()}\n${this.description}\n\n${this.printEntities()}\n${this.printExits()}`);
     }
  }
