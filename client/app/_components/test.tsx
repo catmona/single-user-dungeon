@@ -1,16 +1,22 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 const ENDPOINT = "http://localhost:8000";
 
+interface game_message {
+    message: string;
+    roomId: string;
+}
+
 export default function Test() {
-    const [res, setRes] = useState(0);
+    const [currentRoomId, setcurrentRoomId] = useState("");
     const [inputText, setInputText] = useState("");
     const [outputText, setOutputText] = useState("");
     
+    //get starting room when first loading page
     useEffect(() => {
         fetch(ENDPOINT)
             .then(res =>res.text())
-            .then(out => setRes(out))
-    })
+            .then(out => setcurrentRoomId(out))
+    }, [])
     
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setInputText(event.target.value);
@@ -23,20 +29,25 @@ export default function Test() {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
-                input: inputText,
+                message: inputText,
+                roomId: currentRoomId
             }),
             headers: {
                 'Content-type': 'application/json'
             }
         })
-            .then(res => res.text())
-            .then(out => console.log(out))
-        
+            .then(res => res.json())
+            .then(out => handleOutput(out));
+    }
+    
+    function handleOutput(output: game_message) {
+        console.log(output.message);
+        setcurrentRoomId(output.roomId);
     }
     
     return(
         <div>
-            {res}
+            {currentRoomId}
             <span>{outputText}</span>
             <form onSubmit={handleSubmit}>
                 <input type="text" value={inputText} onChange={handleChange}/>

@@ -1,5 +1,5 @@
 import { Entity } from "./entity";
-import { UndefinedEntity, game_state } from "./globals";
+import { UndefinedEntity, game_message, game_state } from "./globals";
 import { parseInput } from "./parser";
 import { Room } from "./room";
 

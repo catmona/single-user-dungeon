@@ -6,6 +6,7 @@ export class Room {
     public name: string;
     public description: string;
     public entities?: Entity[];
+    private static roomContainer = new Map<string, Room>();
     private exit = new Array<Room>(4)
     
     //automatically generated: `r1-"start room"`
@@ -16,6 +17,11 @@ export class Room {
         this.name = name;
         this.description = desc;
         this.id = `r${++Room.numRooms}-"${name}"`;
+        Room.roomContainer.set(this.id, this);
+    }
+    
+    public static getRoomById(id: string): Room | undefined {
+        return Room.roomContainer.get(id);
     }
     
     //returns an entity with a matching alias if it exists

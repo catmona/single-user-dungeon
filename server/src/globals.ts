@@ -31,6 +31,11 @@ export interface game_state {
     room: Room;
 }
 
+export interface game_message {
+    message: string;
+    roomId: string;
+}
+
 export class UndefinedEntity extends Entity {
     constructor() {
         super("undefined", "an undefined entity");
