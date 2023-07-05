@@ -16,6 +16,8 @@ export function parseCommand(input: string, gameState: game_state): [string, gam
     
     switch(info.command) {
         case "look":
+        case "l":
+        case "examine":
             if(info.args.length > 0) {
                 //get entity from the entered string
                 target1 = gameState.room.getEntityFromAlias(info.args[0]);

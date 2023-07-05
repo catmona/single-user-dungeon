@@ -1,3 +1,4 @@
+import { SignEntity } from "./entities/interactable";
 import { NutEntity } from "./entities/nut";
 import { SquirrelEntity } from "./entities/squirrel";
 import { Entity } from "./entity";
@@ -9,7 +10,8 @@ export function startGame() {
         const start = new Room("start", "a test room");
     start.entities = [
         new SquirrelEntity(),
-        new NutEntity()
+        new NutEntity(),
+        new SignEntity("@red wow! you can read without glasses!"),
     ]
 
     const end = new Room("end", "the finishing room");
@@ -25,5 +27,5 @@ export function startGame() {
     // console.log(parseCommand("test", { room: start })); 
     // console.log(parseCommand("look", { room: start })); 
     // console.log(parseCommand("look squirrel", { room: start })); 
-    console.log(parseCommand("North", { room: start })); 
+    console.log(parseCommand("read sign", { room: start })[0]); 
 }
