@@ -9,7 +9,7 @@ interface game_message {
 export default function Test() {
     const [currentRoomId, setcurrentRoomId] = useState("");
     const [inputText, setInputText] = useState("");
-    const [outputText, setOutputText] = useState("");
+    const [outputText, setOutputText] = useState<HTMLDivElement>();
     
     //get starting room when first loading page
     useEffect(() => {
@@ -41,16 +41,33 @@ export default function Test() {
     }
     
     function handleOutput(output: game_message) {
-        console.log(output.message);
         setcurrentRoomId(output.roomId);
+        setOutputText(colorText(output.message));
+    }
+    
+    useEffect(() => {
+        const container = document.getElementById("output-container");
+        if(!container) return;
+        
+        if(outputText) container.appendChild(outputText);
+        container.scrollTop = container.scrollHeight;
+        
+    }, [outputText])
+    
+    function colorText(text: string): HTMLDivElement {
+        console.log(text);
+        let div = document.createElement("div");
+        // div.className = "dis"
+        div.textContent = text;
+        return div;
     }
     
     return(
-        <div>
-            {currentRoomId}
-            <span>{outputText}</span>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={inputText} onChange={handleChange}/>
+        <div className="m-2">
+            <h1 className="text-lg font-xtrabold">{currentRoomId}</h1>
+            <div id="output-container" className="block whitespace-pre overflow-y-auto h-80"></div>
+            <form className="mt-2" onSubmit={handleSubmit}>
+                <input className="text-black w-full" type="text" value={inputText} onChange={handleChange}/>
             </form>
         </div>
     )
