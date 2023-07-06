@@ -7,15 +7,13 @@ interface game_message {
 }
 
 export default function Test() {
-    const [currentRoomId, setcurrentRoomId] = useState("");
+    const [currentRoomId, setcurrentRoomId] = useState("login");
     const [inputText, setInputText] = useState("");
     const [outputText, setOutputText] = useState<HTMLDivElement>();
     
     //get starting room when first loading page
     useEffect(() => {
-        fetch(ENDPOINT)
-            .then(res =>res.text())
-            .then(out => setcurrentRoomId(out))
+        messageServer();
     }, [])
     
     //fires whenever the user types in the input box
@@ -32,6 +30,10 @@ export default function Test() {
         setOutputText(processText(inputText, false));
         
         //try to process user-entered command on the server
+        messageServer();
+    }
+    
+    async function messageServer() {
         fetch(ENDPOINT + "/api/test", {
             method: 'POST',
             credentials: 'include',
@@ -43,8 +45,8 @@ export default function Test() {
                 'Content-type': 'application/json'
             }
         })
-            .then(res => res.json()) //convert output to object
-            .then(out => handleOutput(out)); //handle server output
+        .then(res => res.json()) //convert output to object
+        .then(out => handleOutput(out)); //handle server output
             //TODO: handle errors
     }
     
@@ -98,45 +100,46 @@ export default function Test() {
     //color message using # as seperators
     function colorText(text: string): HTMLDivElement {
         let container = document.createElement("div");
+        container.className = " "
         
         text.split("#").forEach(t => {
-            let div = document.createElement("div");
+            let text = document.createElement("span");
             
             //the string to be colored, or the entire string if no colors exist
-            div.textContent = t; 
-            div.className = "inline ";
+            text.textContent = t; 
+            text.className = " ";
             
             //check for color codes!
             let [firstWord, ...rest] = t.split(" ");
             switch (firstWord) {
                 case "red":
-                    div.className += "text-red-400";
-                    div.textContent = rest.join(" "); //skip color code
+                    text.className += "text-red-400";
+                    text.textContent = rest.join(" "); //skip color code
                     break;
                     
                 case "cyan":
-                    div.className += "text-cyan-400";
-                    div.textContent = rest.join(" "); //skip color code
+                    text.className += "text-cyan-400";
+                    text.textContent = rest.join(" "); //skip color code
                     break;
                     
                 case "green":
-                    div.className += "text-green-400";
-                    div.textContent = rest.join(" "); //skip color code
+                    text.className += "text-green-400";
+                    text.textContent = rest.join(" "); //skip color code
                     break;
                     
                 case "yellow":
-                    div.className += "text-yellow-400";
-                    div.textContent = rest.join(" "); //skip color code
+                    text.className += "text-yellow-400";
+                    text.textContent = rest.join(" "); //skip color code
                     break;
                     
                 default:
-                    div.className += "text-white";
+                    text.className += "text-white";
                     //no color code to skip, assume white
                     break;
             }
             
             //add content to a dummy container
-            container.appendChild(div);
+            container.appendChild(text);
         })
             
         return container;
@@ -145,8 +148,8 @@ export default function Test() {
     return(
         <div className="m-2 font-mono">
             <h1 className="text-lg font-extrabold">{currentRoomId}</h1>
-            <div className="overflow-y-auto max-h-[85vh]">
-                <div id="output-container" className="block whitespace-pre"></div>
+            <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
+                <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
                 <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
                     <label className="inline w-5 font-semibold text-green-400">{`>>`}</label>
                     <input className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" autoFocus type="text" value={inputText} onChange={handleChange}/>

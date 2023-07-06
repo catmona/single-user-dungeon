@@ -8,7 +8,7 @@ import { Room } from "./room";
 
 //returns the id of the starting room
 export function startGame(): string {
-        const start = new Room("start", "a test room");
+    const start = new Room("start", "a test room");
     start.entities = [
         new SquirrelEntity(),
         new NutEntity(),
@@ -25,11 +25,19 @@ export function startGame(): string {
 
     start.setExit("N", end);  
     
-    // console.log(parseCommand("test", { room: start })); 
-    // console.log(parseCommand("look", { room: start })); 
-    // console.log(parseCommand("look squirrel", { room: start })); 
-    //console.log(parseCommand("read sign", { room: start })[0]); 
     return start.id;
+}
+
+export function promptLogin(): game_message {
+    const welcomeMessage = "placeholder welcome text!\n\nEnter character's name:";
+    
+    return { message: welcomeMessage, roomId: "login" };
+}
+
+export function login(startRoomId: string): game_message {
+    const loginMessage = `Account not found. Creating new guest account and joining server...\n\nWelcome to the world of #yellow [placeholder name]#! type "#red look#" to take a look around!`;
+    
+    return { message: loginMessage, roomId: startRoomId }
 }
 
 export function message(gameMessage: game_message): game_message {

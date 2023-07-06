@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { message, startGame } from './test';
+import { login, message, promptLogin, startGame } from './test';
 import { game_message } from './globals';
 
 dotenv.config();
@@ -16,15 +16,22 @@ app.use(cors({
 
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send(startRoomId);
-});
-
 app.post('/api/test', (req: Request, res: Response) => {
   const inputMessage: game_message = req.body;
   console.debug(`inputRoomId: ${inputMessage.roomId}, inputMessage: ${inputMessage.message}`);
   
-  const outputMessage = message(inputMessage);
+  let outputMessage: game_message; 
+  if(inputMessage.roomId != "login")
+    outputMessage = message(inputMessage);
+    
+  //send welcome prompt
+  else if(inputMessage.roomId == "login" && inputMessage.message == "")
+    outputMessage = promptLogin();
+    
+  //user has entered "bad" character name, start the game
+  else 
+    outputMessage = login(startRoomId);
+    
   console.debug(`outputRoomId: ${outputMessage.roomId}, outputMessage: ${outputMessage.message}`);
   res.send(JSON.stringify(outputMessage));
 });
