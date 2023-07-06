@@ -54,7 +54,8 @@ export default function Test() {
         if(!container) return;
         
         if(outputText) container.appendChild(outputText);
-        container.scrollTop = container.scrollHeight;
+        const scrollbox = container.parentElement;
+        if(scrollbox) scrollbox.scrollTop = scrollbox.scrollHeight;
         
     }, [outputText])
     
@@ -71,10 +72,10 @@ export default function Test() {
         container.appendChild(pre);
         container.appendChild(div);
         
-        pre.className = "inline text-green-400 font-semibold";
-        div.className = "inline";
+        pre.className = "inline text-green-400 font-semibold font-mono";
+        div.className = "inline font-mono";
         
-        pre.textContent = "\n>>  ";
+        pre.textContent = "\n>> ";
         div.textContent = text;
         
         return container;
@@ -122,18 +123,20 @@ export default function Test() {
             //add content to a dummy container
             container.appendChild(div);
         })
-        
+            
         return container;
     }
     
     return(
-        <div className="m-2">
+        <div className="m-2 font-mono">
             <h1 className="text-lg font-extrabold">{currentRoomId}</h1>
-            <div id="output-container" className="block whitespace-pre overflow-y-auto h-80"></div>
-            <form className="mt-8 w-full" onSubmit={handleSubmit}>
-                <label className="w-5 font-semibold text-green-400">{`>>`}</label>
-                <input className="text-white ml-2 bg-transparent focus:outline-none" autoFocus type="text" value={inputText} onChange={handleChange}/>
-            </form>
+            <div className="overflow-y-auto max-h-[85vh]">
+                <div id="output-container" className="block whitespace-pre"></div>
+                <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
+                    <label className="inline w-5 font-semibold text-green-400">{`>>`}</label>
+                    <input className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" autoFocus type="text" value={inputText} onChange={handleChange}/>
+                </form>
+            </div>
         </div> 
     )
 }
