@@ -1,12 +1,10 @@
-import { COMMAND_LIST } from "./globals";
+import { Commands } from "./commands";
+import { Entity } from "./entity";
+import { COMMAND_LIST, UndefinedEntity, command_data, game_state } from "./globals";
+import { Room } from "./room";
 
 const MAX_CHARS = 50;
 const MIN_CHARS = 0;
-
-interface command_data {
-    command: string;
-    args: string[];
-}
 
 //returns {command, args[]}. Command contains "undefined" if an error occurs.
 export function parseInput(input: string): command_data {
@@ -77,4 +75,40 @@ export function parseInput(input: string): command_data {
     }
     
     return {command, args};
+}
+
+
+//returns a string with what should be printed to the screen and the updated gamestate
+export function parseCommand(input: string, gameState: game_state): [string, game_state] {
+    //parse input and check for errors
+    const info = parseInput(input);
+    if(info.command == "undefined") return [info.args[0], gameState];
+    console.debug(info);
+    
+    switch(info.command) {
+        case "look":
+        case "l":
+        case "examine":
+           return Commands.look(info, gameState);
+            
+        case "feed":
+            return Commands.feed(info, gameState);
+            
+        case "read":
+            return Commands.read(info, gameState);
+            
+        case "north":
+        case "east":
+        case "south":
+        case "west":
+        case "n":
+        case "e":
+        case "s":
+        case "w":
+            return Commands.move(info, gameState);
+        
+        default:
+            return [`Unrecognized command: ${info.command}`, gameState];
+        
+    }
 }

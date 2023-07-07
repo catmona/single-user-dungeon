@@ -8,6 +8,11 @@ export interface command_info {
     }
 }
 
+export interface command_data {
+    command: string;
+    args: string[];
+}
+
 export const COMMAND_LIST = new Map<string, command_info>([
     ["look", { args: { required: 0, optional: 1 } }],
     ["l", { args: { required: 0, optional: 1 } }],
