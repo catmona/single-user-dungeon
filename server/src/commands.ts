@@ -2,7 +2,7 @@ import { Entity } from "./entity";
 import { UndefinedEntity, command_data, game_state } from "./globals";
 
 export class Commands {
-    
+        
     public static look(info: command_data, gameState: game_state): [string, game_state] {
         let target1 = new UndefinedEntity;
         
@@ -53,5 +53,13 @@ export class Commands {
         if(newRoom == undefined) return ["You can't go that direction.", gameState];
         else gameState.room = newRoom;
         return [gameState.room.printRoom(), gameState];
+    }
+    
+    static say(info: command_data, gameState: game_state): [string, game_state] {
+        if(info.args.length == 1) {
+            return [`You say, #yellow ${info.args[0]}#`, gameState];
+        }
+        
+        else return ["say what?", gameState];
     }
 }

@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { processText } from "./helpers/utilities";
+import { gsap } from "gsap";
+import SplitType from 'split-type';
+
 const ENDPOINT = "http://localhost:8000";
 
 interface game_message {
@@ -34,7 +37,7 @@ export default function Console() {
         console.debug(`input: ${inputText}`);
         
         //add input to the user's input history
-        if(inputText != "")
+        if(inputText != "" && inputHistory[0] != inputText)
             setInputHistory(oldHistory => [inputText, ...oldHistory]);
         
         //reset history index
@@ -109,7 +112,21 @@ export default function Console() {
         const scrollbox = container.parentElement;
         if(scrollbox) scrollbox.scrollTop = scrollbox.scrollHeight;
         
+        //animate!
+        if(!outputText) return;
+        
+        let toAnimate = outputText.querySelectorAll(".console-char");
+        
+        gsap.to(toAnimate, {
+            opacity: 1,
+            stagger: 0.01,
+            delay: 0.0,
+            duration: 0.0,
+        })
+        
     }, [outputText])
+    
+    
     
     return(
         <div className="m-2 font-mono">

@@ -1,7 +1,6 @@
 import { SignEntity } from "./entities/interactable";
 import { NutEntity } from "./entities/nut";
 import { SquirrelEntity } from "./entities/squirrel";
-import { Entity } from "./entity";
 import { parseCommand } from "./parser";
 import { game_message, game_state } from "./globals";
 import { Room } from "./room";

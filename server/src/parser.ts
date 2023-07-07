@@ -3,7 +3,7 @@ import { Entity } from "./entity";
 import { COMMAND_LIST, UndefinedEntity, command_data, game_state } from "./globals";
 import { Room } from "./room";
 
-const MAX_CHARS = 50;
+const MAX_CHARS = 100;
 const MIN_CHARS = 0;
 
 //returns {command, args[]}. Command contains "undefined" if an error occurs.
@@ -13,7 +13,7 @@ export function parseInput(input: string): command_data {
     
     //check length of input against min & max
     if(input.length <= MIN_CHARS || input.length >= MAX_CHARS)
-        return {command: "undefined", args: ["incorrect string entered"]};
+        return {command: "undefined", args: ["What?"]};
     
     //separate input into array split by whitespace
     const inputs = input.split(" ");
@@ -25,16 +25,16 @@ export function parseInput(input: string): command_data {
     let foundCommand = false;
     inputs.forEach(w => {
         if(COMMAND_LIST.has(w)) {
-            if(foundCommand) return {command: "undefined", args: ["too many commands entered"]}; //too many commands found
+            if(foundCommand) return {command: "undefined", args: ["What?"]}; //too many commands found
             foundCommand = true;
         }
     })
     
-    if(!foundCommand) return {command: "undefined", args: ["no valid command found"]}; //no command found
+    if(!foundCommand) return {command: "undefined", args: ["What?"]}; //no command found
     
     //check input for valid command
     const cmd = COMMAND_LIST.get(inputs[0]);
-    if(cmd == undefined) return {command: "undefined", args: ["first word isn't a command"]}; //first word is not a valid command
+    if(cmd == undefined) return {command: "undefined", args: ["What?"]}; //first word is not a valid command
     
     //set command to the valid command name
     command = inputs[0];
@@ -71,7 +71,7 @@ export function parseInput(input: string): command_data {
         })
         
         if(foundReq > cmd.args.required || foundOpt > cmd.args.optional) 
-        return {command: "undefined", args: ["too many entities entered"]}; //too many arguments found for given command
+        return {command: "undefined", args: ["What?"]}; //too many arguments found for given command
     }
     
     return {command, args};
@@ -106,6 +106,9 @@ export function parseCommand(input: string, gameState: game_state): [string, gam
         case "s":
         case "w":
             return Commands.move(info, gameState);
+            
+        case "say":
+            return Commands.say(info, gameState);
         
         default:
             return [`Unrecognized command: ${info.command}`, gameState];

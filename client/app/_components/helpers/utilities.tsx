@@ -1,46 +1,55 @@
 //color message using # as seperators
     export function colorText(text: string): HTMLDivElement {
         let container = document.createElement("div");
-        container.className = " "
+        container.className = ""
         
         text.split("#").forEach(t => {
-            let text = document.createElement("span");
+            let line = document.createElement("span");
+            let lineText = t;
             
             //the string to be colored, or the entire string if no colors exist
-            text.textContent = t; 
-            text.className = " ";
+            //line.textContent = t; 
+            line.className = "";
             
             //check for color codes!
             let [firstWord, ...rest] = t.split(" ");
             switch (firstWord) {
                 case "red":
-                    text.className += "text-red-400";
-                    text.textContent = rest.join(" "); //skip color code
+                    line.className += "text-red-400";
+                    lineText = rest.join(" "); //skip color code
                     break;
                     
                 case "cyan":
-                    text.className += "text-cyan-400";
-                    text.textContent = rest.join(" "); //skip color code
+                    line.className += "text-cyan-400";
+                    lineText = rest.join(" "); //skip color code
                     break;
                     
                 case "green":
-                    text.className += "text-green-400";
-                    text.textContent = rest.join(" "); //skip color code
+                    line.className += "text-green-400";
+                    lineText = rest.join(" "); //skip color code
                     break;
                     
                 case "yellow":
-                    text.className += "text-yellow-400";
-                    text.textContent = rest.join(" "); //skip color code
+                    line.className += "text-yellow-400";
+                    lineText = rest.join(" "); //skip color code
                     break;
                     
                 default:
-                    text.className += "text-white";
+                    line.className += "text-white";
                     //no color code to skip, assume white
                     break;
             }
             
+            for(const c of lineText) {
+                let char = document.createElement("span");
+                char.textContent = c;
+                char.className = "console-char opacity-0 transition-opacity"
+                
+                line.appendChild(char);
+            }
+            
             //add content to a dummy container
-            container.appendChild(text);
+            container.appendChild(line);
         })
             
         return container;
