@@ -16,7 +16,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post('/api/test', (req: Request, res: Response) => {
+app.post('/api/message', (req: Request, res: Response) => {
   const inputMessage: game_message = req.body;
   console.debug(`inputRoomId: ${inputMessage.roomId}, inputMessage: ${inputMessage.message}`);
   

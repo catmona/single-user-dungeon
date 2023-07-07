@@ -29,13 +29,14 @@ export function startGame(): string {
 }
 
 export function promptLogin(): game_message {
-    const welcomeMessage = "placeholder welcome text!\n\nEnter character's name:";
+    const welcomeMessage = "placeholder welcome text!\n\nEnter your account name to continue thy adventure:";
     
     return { message: welcomeMessage, roomId: "login" };
 }
 
 export function login(startRoomId: string): game_message {
-    const loginMessage = `Account not found. Creating new guest account and joining server...\n\nWelcome to the world of #yellow [placeholder name]#! type "#red look#" to take a look around!`;
+    let loginMessage = `#red Error fetching character - account has been permanently deleted. Creating new guest account and joining server...\n\n`;
+    loginMessage += `#Welcome to the world of #yellow [placeholder name]#! type "#red look#" to take a look around, and maybe "#red read#" the #red Sign#!`;
     
     return { message: loginMessage, roomId: startRoomId }
 }

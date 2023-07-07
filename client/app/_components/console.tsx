@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { processText } from "./helpers/utilities";
 const ENDPOINT = "http://localhost:8000";
 
@@ -12,6 +12,9 @@ export default function Console() {
     const [inputText, setInputText] = useState("");
     const [outputText, setOutputText] = useState<HTMLDivElement>();
     
+    const [inputHistory, setInputHistory] = useState<string[]>([]);
+    const [historyIndex, setHistoryIndex] = useState(-1);
+    
     //get starting room when first loading page
     useEffect(() => {
         messageServer();
@@ -20,12 +23,22 @@ export default function Console() {
     //fires whenever the user types in the input box
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setInputText(event.target.value);
+        
+        //reset history index
+        // setHistoryIndex(-1);
     }
     
     //fires when the user presses enter on the input box
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault(); //prevent default behaviour (reloading webpage)
         console.debug(`input: ${inputText}`);
+        
+        //add input to the user's input history
+        if(inputText != "")
+            setInputHistory(oldHistory => [inputText, ...oldHistory]);
+        
+        //reset history index
+        setHistoryIndex(-1);
         
         //log user command in output container
         setOutputText(processText(inputText, false));
@@ -35,7 +48,7 @@ export default function Console() {
     }
     
     async function messageServer() {
-        fetch(ENDPOINT + "/api/test", {
+        fetch(ENDPOINT + "/api/message", {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
@@ -59,6 +72,31 @@ export default function Console() {
         setOutputText(processText(output.message, true));
     }
     
+    useEffect(() => {
+        console.debug(historyIndex);
+        if(historyIndex >= 0) {
+            setInputText(inputHistory[historyIndex]);
+        }
+        else {
+            setInputText("");
+        }
+    }, [historyIndex])
+    
+    
+    function lookHistory(event: KeyboardEvent) {
+        if(event.key == "ArrowUp") {
+            event.preventDefault();
+            if(historyIndex < inputHistory.length - 1)
+                setHistoryIndex(historyIndex + 1);  
+        }
+        
+        else if(event.key == "ArrowDown") {
+            event.preventDefault();
+            if(historyIndex > -1) 
+                setHistoryIndex(historyIndex - 1);           
+        }
+    }
+    
     //whenever we get new output, add it to the output container log
     useEffect(() => {
         const container = document.getElementById("output-container");
@@ -80,7 +118,14 @@ export default function Console() {
                 <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
                 <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
                     <label className="inline w-5 font-semibold text-green-400">{`>>`}</label>
-                    <input className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" autoFocus type="text" value={inputText} onChange={handleChange}/>
+                    <input 
+                        className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" 
+                        onKeyDown={e => lookHistory(e)} 
+                        autoFocus 
+                        type="text" 
+                        value={inputText} 
+                        onChange={handleChange}
+                    />
                 </form>
             </div>
         </div> 
