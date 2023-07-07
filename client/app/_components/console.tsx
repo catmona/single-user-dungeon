@@ -116,12 +116,18 @@ export default function Console() {
         if(!outputText) return;
         
         let toAnimate = outputText.querySelectorAll(".console-char");
+        let inputField = document.getElementById("console-input");
         
         gsap.to(toAnimate, {
             opacity: 1,
             stagger: 0.01,
             delay: 0.0,
             duration: 0.0,
+            onStart: () => inputField!.setAttribute("disabled", "disabled"),
+            onComplete: () => {
+                inputField!.removeAttribute("disabled");
+                inputField!.focus();
+            },
         })
         
     }, [outputText])
@@ -142,6 +148,7 @@ export default function Console() {
                         type="text" 
                         value={inputText} 
                         onChange={handleChange}
+                        id="console-input"
                     />
                 </form>
             </div>
