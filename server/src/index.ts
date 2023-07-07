@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { login, message, promptLogin, startGame } from './test';
+import { login, message, promptLogin, startGame } from './api';
 import { game_message } from './globals';
 
 dotenv.config();
