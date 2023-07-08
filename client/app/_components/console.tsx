@@ -144,7 +144,7 @@ export default function Console() {
     return(
         <div className="m-2 font-mono">
             <div className={styles.crt}>
-                <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1>
+                {/* <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1> */}
                 <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
                     <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
                     <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
