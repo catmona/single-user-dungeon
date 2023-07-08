@@ -117,16 +117,23 @@ export default function Console() {
         
         let toAnimate = outputText.querySelectorAll(".console-char");
         let inputField = document.getElementById("console-input");
+        let inputLabel = document.getElementById("console-label");
         
         gsap.to(toAnimate, {
             opacity: 1,
             stagger: 0.01,
             delay: 0.0,
             duration: 0.0,
-            onStart: () => inputField!.setAttribute("disabled", "disabled"),
+            onStart: () => {
+                inputField!.setAttribute("disabled", "disabled")
+                inputLabel!.classList.remove("text-green-400");
+                inputLabel!.classList.add("text-gray-500");
+            },
             onComplete: () => {
                 inputField!.removeAttribute("disabled");
                 inputField!.focus();
+                inputLabel!.classList.add("text-green-400");
+                inputLabel!.classList.remove("text-gray-500");
             },
         })
         
@@ -136,11 +143,11 @@ export default function Console() {
     
     return(
         <div className="m-2 font-mono">
-            <h1 className="text-lg font-extrabold">{currentRoomId}</h1>
+            <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1>
             <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
                 <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
                 <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
-                    <label className="inline w-5 font-semibold text-green-400">{`>>`}</label>
+                    <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
                     <input 
                         className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" 
                         onKeyDown={e => lookHistory(e)} 

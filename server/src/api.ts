@@ -2,8 +2,9 @@ import { SignEntity } from "./entities/interactable";
 import { NutEntity } from "./entities/nut";
 import { SquirrelEntity } from "./entities/squirrel";
 import { parseCommand } from "./parser";
-import { game_message, game_state } from "./globals";
+import { WELCOME, game_message, game_state } from "./globals";
 import { Room } from "./room";
+import { readFileSync } from "fs";
 
 //returns the id of the starting room
 export function startGame(): string {
@@ -28,14 +29,15 @@ export function startGame(): string {
 }
 
 export function promptLogin(): game_message {
-    const welcomeMessage = "placeholder welcome text!\n\nEnter your account name to continue thy adventure:";
-    
+    const welcomeMessage = WELCOME + "\n\nEnter your account name to continue thy adventure:";
+    console.log(welcomeMessage)
     return { message: welcomeMessage, roomId: "login" };
 }
 
 export function login(startRoomId: string): game_message {
-    let loginMessage = `#red Error fetching character - account has been permanently deleted. Creating new guest account and joining server...\n\n`;
-    loginMessage += `#Welcome to the world of #yellow [placeholder name]#! type "#red look#" to take a look around, and maybe "#red read#" the #red Sign#!`;
+    let loginMessage = `#red Error fetching character - account has been permanently deleted. Creating new guest account and joining server...\n`;
+    loginMessage += `                                                              \n`;
+    loginMessage += `#Welcome to the world of #yellow [Kenopsia]#! type "#red look#" to take a look around, and maybe "#red read#" the #red Sign#!`;
     
     return { message: loginMessage, roomId: startRoomId }
 }
