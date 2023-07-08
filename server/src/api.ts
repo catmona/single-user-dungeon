@@ -4,10 +4,12 @@ import { SquirrelEntity } from "./entities/squirrel";
 import { parseCommand } from "./parser";
 import { WELCOME, game_message, game_state } from "./globals";
 import { Room } from "./room";
-import { readFileSync } from "fs";
+import { CommandList } from "./command";
 
 //returns the id of the starting room
 export function startGame(): string {
+    CommandList.setupCommands();
+    
     const start = new Room("start", "a test room");
     start.entities = [
         new SquirrelEntity(),

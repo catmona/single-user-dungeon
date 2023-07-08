@@ -90,16 +90,16 @@ export class Room {
     
     public getExit(dir: string): Room | undefined {
         switch (dir) {
-            case "n":
+            case "N":
             case "north":
                 return this.exit[0];
-            case "e":
+            case "E":
             case "east":
                 return this.exit[1];
-            case "s":
+            case "S":
             case "south":
                 return this.exit[2];
-            case "w":
+            case "W":
             case "west":
                 return this.exit[3];
             default:

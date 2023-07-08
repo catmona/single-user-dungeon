@@ -18,6 +18,11 @@
                     line.className += "text-red-400";
                     lineText = rest.join(" "); //skip color code
                     break;
+                
+                case "blue":
+                    line.className += "text-blue-400";
+                    lineText = rest.join(" "); //skip color code
+                    break;
                     
                 case "cyan":
                     line.className += "text-cyan-400";
@@ -39,6 +44,11 @@
                     lineText = rest.join(" "); //skip color code
                     break;
                     
+                case "gray":
+                    line.className += "text-gray-400";
+                    lineText = rest.join(" "); //skip color code
+                    break;
+                
                 default:
                     line.className += "text-white";
                     //no color code to skip, assume white
