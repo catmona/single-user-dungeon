@@ -31,10 +31,18 @@ export default function Console() {
         // setHistoryIndex(-1);
     }
     
+    //change width of input text field whenever input text changes
+    useEffect(() => {
+        const input = document.getElementById("console-input");
+        if(input) input.style.width = inputText.length + "ch";
+        
+    }, [inputText]);
+    
     //fires when the user presses enter on the input box
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault(); //prevent default behaviour (reloading webpage)
         console.debug(`input: ${inputText}`);
+        if(inputText === "") return;
         
         //add input to the user's input history
         if(inputText != "" && inputHistory[0] != inputText)
@@ -139,10 +147,14 @@ export default function Console() {
         
     }, [outputText])
     
+    function focusInput() {
+        const input = document.getElementById("console-input");
+        if(input) input.focus();
+    }
     
     
     return(
-        <div className="m-2 font-mono">
+        <div className="m-2 font-mono" onClick={e => focusInput()}>
             <div className={styles.crt}>
                 {/* <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1> */}
                 <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
@@ -150,7 +162,7 @@ export default function Console() {
                     <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
                         <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
                         <input 
-                            className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" 
+                            className="inline peer text-white ml-2 max-w-full font-mono caret-transparent bg-transparent focus:outline-none" 
                             onKeyDown={e => lookHistory(e)} 
                             autoFocus 
                             type="text" 
@@ -158,6 +170,7 @@ export default function Console() {
                             onChange={handleChange}
                             id="console-input"
                         />
+                        <span id="console-caret" className="w-[1ch] bg-gray-200 h-[20px] inline-block animate-caret invisible peer-focus:visible"/>
                     </form>
                 </div>
             </div>

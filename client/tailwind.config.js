@@ -15,6 +15,7 @@ module.exports = {
       animation: {
         'pulse-slow': 'slowpulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'flicker': 'flicker 0.15s infinite',
+        'caret': 'pulse 1s step-end infinite',
       },
       keyframes: {
         slowpulse: {
