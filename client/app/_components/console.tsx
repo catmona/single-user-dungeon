@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { processText } from "./helpers/utilities";
 import { gsap } from "gsap";
-import SplitType from 'split-type';
+import styles from '../_styles/console.module.css'
 
 const ENDPOINT = "http://localhost:8000";
 
@@ -143,21 +143,23 @@ export default function Console() {
     
     return(
         <div className="m-2 font-mono">
-            <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1>
-            <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
-                <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
-                <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
-                    <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
-                    <input 
-                        className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" 
-                        onKeyDown={e => lookHistory(e)} 
-                        autoFocus 
-                        type="text" 
-                        value={inputText} 
-                        onChange={handleChange}
-                        id="console-input"
-                    />
-                </form>
+            <div className={styles.crt}>
+                <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1>
+                <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
+                    <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
+                    <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
+                        <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
+                        <input 
+                            className="inline text-white ml-2 w-full font-mono caret-white bg-transparent focus:outline-none" 
+                            onKeyDown={e => lookHistory(e)} 
+                            autoFocus 
+                            type="text" 
+                            value={inputText} 
+                            onChange={handleChange}
+                            id="console-input"
+                        />
+                    </form>
+                </div>
             </div>
         </div> 
     )
