@@ -32,6 +32,8 @@ export const COMMAND_LIST = new Map<string, command_info>([
     ["w", { args: { required: 0, optional: 0 } }],
     
     ["say", { args: { required: 1, optional: 0 } }],
+    
+    ["yell", { args: { required: 1, optional: 0 } }],
 ])
 
 export interface game_state {

@@ -56,10 +56,18 @@ export class Commands {
     }
     
     static say(info: command_data, gameState: game_state): [string, game_state] {
-        if(info.args.length == 1) {
-            return [`You say, #yellow ${info.args[0]}#`, gameState];
+        if(info.args.length > 0) {
+            return [`You say #yellow "${info.args.join(" ")}"#`, gameState];
         }
         
         else return ["say what?", gameState];
+    }
+    
+    static yell(info: command_data, gameState: game_state): [string, game_state] {
+        if(info.args.length > 0) {
+            return [`You yell #orange "${info.args.join(" ")}"#`, gameState];
+        }
+        
+        else return ["yell what?", gameState];
     }
 }

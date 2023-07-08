@@ -109,6 +109,9 @@ export function parseCommand(input: string, gameState: game_state): [string, gam
             
         case "say":
             return Commands.say(info, gameState);
+            
+        case "yell":
+            return Commands.yell(info, gameState);
         
         default:
             return [`Unrecognized command: ${info.command}`, gameState];

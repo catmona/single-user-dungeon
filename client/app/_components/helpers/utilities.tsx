@@ -34,6 +34,11 @@
                     lineText = rest.join(" "); //skip color code
                     break;
                     
+                case "orange":
+                    line.className += "text-orange-400";
+                    lineText = rest.join(" "); //skip color code
+                    break;
+                    
                 default:
                     line.className += "text-white";
                     //no color code to skip, assume white
