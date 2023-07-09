@@ -271,13 +271,18 @@ export class Command {
             `"who" / "who [player name]"`,
 
             function (gameState: game_state, args: string[]): [string, game_state] {
-            if (args.length > 0) {
-                //TODO player details
-                return ["placeholder details about player: " + args[0], gameState];
-            }
+               const otherPlayerDetails = "Placeholder details";
+               const playerList = "Placeholder Player List"
+               
+               if (args.length > 0) {
+                  if(args[0] == "name") {
+                     return [otherPlayerDetails, gameState];
+                  } else {
+                     return [`#cyan ${args[0]}# is not online.`, gameState];
+                  }
+               }
             
-            //TODO player list
-            return ["placeholder player list", gameState];
+               return [playerList, gameState];
         }
             
      );
