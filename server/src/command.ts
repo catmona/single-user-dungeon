@@ -13,6 +13,17 @@ export class Command {
     private syntax = "";
     private func: Func;
     
+    //contains a mapping of every command & command alias to its relevant data
+    static commandList = new Map<string, Command>();
+    
+    //thrown when an invalid command is entered
+    static errorCmd = new Command(0, 0, ["Error"],
+    "#red Command does not exist.#",
+    "",
+    function(gameState: game_state, args: string[]): [string, game_state] {
+        return ["What?", gameState];
+    });
+    
     constructor(reqArgs: number, optArgs: number, names: string[], desc: string, syntax: string, func: Func) {
         this.reqArgs = reqArgs;
         this.optArgs = optArgs;
@@ -20,6 +31,12 @@ export class Command {
         this.names = names;
         this.syntax = syntax;
         this.func = func;
+        
+        //add to command list
+        names.forEach(e => {
+            e = e.toLowerCase();
+            Command.commandList.set(e, this);
+        })    
     }
     
     public runCommand(gameState: game_state, args: string[]): [string, game_state] {
@@ -31,20 +48,6 @@ export class Command {
     public getHelpFile() {
         return (`#red ${this.names[0]}#\n${this.desc}\n\nSyntax: #blue ${this.syntax}#\nAliases: #orange ${this.names.join("#, #orange ").toLowerCase()}#`);
     }
-}
-
-
-export class CommandList {
-    //contains a mapping of every command & command alias to its relevant data
-    static commandList: Map<string, Command>
-    
-    //thrown when an invalid command is entered
-    static errorCmd = new Command(0, 0, ["Error"],
-        "#red Command does not exist.#",
-        "",
-        function(gameState: game_state, args: string[]): [string, game_state] {
-        return ["What?", gameState];
-    });
     
     //returns the valid command of the error command if the command name doesn't exist
     static getCommand(name: string): Command {
@@ -56,6 +59,7 @@ export class CommandList {
     
     //runs once at startup, populates the commandList map
     static setupCommands() {
+        Command.commandList = new Map<string, Command>(); //clears the error command from the list
         
         //look at or examine an entity or room
         const lookCmd = new Command(0, 1, ["Look", "l", "examine"],
@@ -208,36 +212,10 @@ export class CommandList {
             
             function(gameState: game_state, args: string[]): [string, game_state] {
             if(args.length > 0)
-                return [CommandList.getCommand(args[0]).getHelpFile(), gameState];
+                return [Command.getCommand(args[0]).getHelpFile(), gameState];
             return [HELP, gameState]
         });
         
-        this.commandList = new Map<string, Command>();
-        this.commandList.set("look", lookCmd);
-        this.commandList.set("l", lookCmd);
-        this.commandList.set("examine", lookCmd);
-        
-        this.commandList.set("feed", feedCmd);
-        
-        this.commandList.set("read", readCmd);
-        
-        this.commandList.set("north", moveNCmd);
-        this.commandList.set("n", moveNCmd);
-        
-        this.commandList.set("south", moveSCmd);
-        this.commandList.set("s", moveSCmd);
-        
-        this.commandList.set("east", moveECmd);
-        this.commandList.set("e", moveECmd);
-        
-        this.commandList.set("west", moveWCmd);
-        this.commandList.set("w", moveWCmd);
-        
-        this.commandList.set("say", sayCmd);
-        
-        this.commandList.set("yell", yellCmd);
-        this.commandList.set("shout", yellCmd);
-        
-        this.commandList.set("help", helpCmd);
+        // console.debug(this.commandList);
     }
 }

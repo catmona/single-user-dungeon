@@ -1,7 +1,5 @@
-import { Command, CommandList } from "./command";
-import { Entity } from "./entity";
-import { UndefinedEntity, game_state } from "./globals";
-import { Room } from "./room";
+import { Command } from "./command";
+import { game_state } from "./globals";
 
 const MAX_CHARS = 100;
 const MIN_CHARS = 0;
@@ -12,7 +10,7 @@ export function parseInput(input: string): [Command, string[]]{
     
     //check length of input against min & max
     if(input.length <= MIN_CHARS || input.length >= MAX_CHARS)
-        return [CommandList.errorCmd, []];
+        return [Command.errorCmd, []];
     
     //separate input into array split by whitespace
     const inputs = input.split(" ");
@@ -23,16 +21,16 @@ export function parseInput(input: string): [Command, string[]]{
     //make sure there isn't more than 1 command entered at once, but at least 1 command
     let foundCommand = false;
     inputs.forEach(w => {
-        if(CommandList.commandList.has(w)) {
-            if(foundCommand) return [CommandList.errorCmd, []]; //too many commands found
+        if(Command.commandList.has(w)) {
+            if(foundCommand) return [Command.errorCmd, []]; //too many commands found
             foundCommand = true;
         }
     })
     
-    if(!foundCommand) return [CommandList.errorCmd, []]; //no command found
+    if(!foundCommand) return [Command.errorCmd, []]; //no command found
     
     //check input for valid command
-    const cmd = CommandList.getCommand(inputs[0]);
+    const cmd = Command.getCommand(inputs[0]);
     console.debug(`command: ${cmd}`);
     
     //trash the command from the input list
@@ -66,7 +64,7 @@ export function parseInput(input: string): [Command, string[]]{
         })
         
         if(foundReq > cmd.reqArgs || foundOpt > cmd.optArgs) 
-        return [CommandList.errorCmd, []]; //too many arguments found for given command
+        return [Command.errorCmd, []]; //too many arguments found for given command
     }
     
     return [cmd, args];
