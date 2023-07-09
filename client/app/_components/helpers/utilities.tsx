@@ -3,58 +3,39 @@
         let container = document.createElement("div");
         container.className = ""
         
+        const colors = new Map<string, string>([
+            ["red", "text-red-400"],
+            ["blue", "text-blue-400"],
+            ["cyan", "text-cyan-400"],
+            ["green", "text-green-400"],
+            ["yellow", "text-yellow-400"],
+            ["orange", "text-orange-400"],
+            ["gray", "text-gray-400"],
+            ["white", "text-white"],
+        ])
+        
         text.split("#").forEach(t => {
             let line = document.createElement("span");
-            let lineText = t;
             
             //the string to be colored, or the entire string if no colors exist
-            //line.textContent = t; 
+            let lineText = t;
             line.className = "console-line ";
             
             //check for color codes!
             let [firstWord, ...rest] = t.split(" ");
-            switch (firstWord) {
-                case "red":
-                    line.className += "text-red-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                
-                case "blue":
-                    line.className += "text-blue-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                    
-                case "cyan":
-                    line.className += "text-cyan-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                    
-                case "green":
-                    line.className += "text-green-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                    
-                case "yellow":
-                    line.className += "text-yellow-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                    
-                case "orange":
-                    line.className += "text-orange-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                    
-                case "gray":
-                    line.className += "text-gray-400";
-                    lineText = rest.join(" "); //skip color code
-                    break;
-                
-                default:
-                    line.className += "text-white";
-                    //no color code to skip, assume white
-                    break;
+            let colorClass = colors.get(firstWord);
+            
+            //if there is a color code in the line
+            if(colorClass) {
+                line.className += colorClass; //color line
+                lineText = rest.join(" "); //skip color code
+            }
+            else {
+                line.className += colors.get("white"); //no color code found
             }
             
+            //split line into multiple <span>'s containing individual characters
+            //for animating
             for(const c of lineText) {
                 let char = document.createElement("span");
                 char.textContent = c;
