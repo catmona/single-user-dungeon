@@ -231,6 +231,38 @@ export class Command {
             return [HELP, gameState];
          }
       );
+      
+      //list all valid commands
+      const listCmd = new Command(
+        ['List', 'commands'],
+        `Get a list of all the valid commands which can be entered! The list includes all the aliases of every command.`,
+        `"list"`,
+
+        function (gameState: game_state, args: string[]): [string, game_state] {
+            const list = new Set<string>();
+            let out = "Valid commands:\n#red ";
+            const trail = "#, #red ";
+            
+            Command.commandList.forEach(command => {
+                const commandName = command.names[0];
+                if(list.has(commandName)) {
+                    return; //skip to next word, duplicate found
+                }
+                else {
+                    //add unique command to output
+                    list.add(commandName);
+                    out += commandName + trail;
+                }
+                
+            });
+            
+            out = out.slice(0, out.length-trail.length); //remove trailing "#, #color"
+            
+            out +="#\n\n(check #blue help [command]# for other names for commands!)"
+            
+            return [out, gameState];
+        }
+     );
 
       // console.debug(this.commandList);
    }
