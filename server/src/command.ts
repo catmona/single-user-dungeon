@@ -262,7 +262,26 @@ export class Command {
             
             return [out, gameState];
         }
+      );
+        
+        //access the player list or a specific player's details
+        const whoCmd = new Command(
+            ['Who', 'finger'],
+            `See a list of every online player, or the details of a specific player.`,
+            `"who" / "who [player name]"`,
+
+            function (gameState: game_state, args: string[]): [string, game_state] {
+            if (args.length > 0) {
+                //TODO player details
+                return ["placeholder details about player: " + args[0], gameState];
+            }
+            
+            //TODO player list
+            return ["placeholder player list", gameState];
+        }
+            
      );
+
 
       // console.debug(this.commandList);
    }
