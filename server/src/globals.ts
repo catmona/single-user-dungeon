@@ -26,3 +26,8 @@ Welcome to #cyan Kenopsia MUD#
 Players Currently Online: #yellow 1#
 Last Connection from this IP: #yellow July 10, 2005#
 `
+
+export const HELP = 
+`
+placeholder help message
+`
