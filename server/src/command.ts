@@ -64,7 +64,6 @@ export class Command {
         //look at or examine an entity or room
         const lookCmd = new Command(0, 1, ["Look", "l", "examine"],
             `Look at something to see a description of it, or look around you to get a description of the room you're in.`,
-            
             `"look [noun]" / "look"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -85,7 +84,6 @@ export class Command {
         //feed
         const feedCmd = new Command(2, 0, ["Feed"],
             `Feed something to something else. Both things need to be in the room you're currently in.`,
-                
             `"feed [noun] the [noun]"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -106,8 +104,7 @@ export class Command {
         
         //read an entity if it has content that is readable
         const readCmd = new Command(1, 0, ["Read"],
-            `Read something! If the thing you're reading has more than 1 page, read the next page by adding the page number`,
-                    
+            `Read something! If the thing you're reading has more than 1 page, read the next page by adding the page number`,    
             `"read [noun]" / "read [noun] 2"`,
               
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -126,8 +123,7 @@ export class Command {
         
         //move through the north exit
         const moveNCmd = new Command(1, 0, ["North", "n"],
-            `Move through the north exit of the current room.`,
-                    
+            `Move through the north exit of the current room.`,    
             `"north"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -139,8 +135,7 @@ export class Command {
         
         //move through the south exit
         const moveSCmd = new Command(1, 0, ["South", "s"],
-            `Move through the south exit of the current room.`,
-                    
+            `Move through the south exit of the current room.`,       
             `"south"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -152,8 +147,7 @@ export class Command {
         
         //move through the east exit
         const moveECmd = new Command(1, 0, ["East", "e"],
-            `Move through the east exit of the current room.`,
-                    
+            `Move through the east exit of the current room.`,    
             `"east"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -166,7 +160,6 @@ export class Command {
         //move through the west exit
         const moveWCmd = new Command(1, 0, ["West", "w"],
             `Move through the west exit of the current room.`,
-                    
             `"west"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -179,7 +172,6 @@ export class Command {
         //say something in yellow text
         const sayCmd = new Command(1, 0, ["Say"],
             `Say something! All the people who are in the room with you will hear what you say!`,
-            
             `"Say [blah blah blah]"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -192,8 +184,7 @@ export class Command {
         
         //yell something in orange text
         const yellCmd = new Command(1, 0, ["Yell", "shout"],
-            `Yell something so that the whole server can hear you! Even people not in the same room as you will be able to hear what you say.`,
-                    
+            `Yell something so that the whole server can hear you! Even people not in the same room as you will be able to hear what you say.`,     
             `"yell [blah blah blah"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
@@ -206,8 +197,7 @@ export class Command {
         
         //access the help file for a command or the general help file
         const helpCmd = new Command(0, 1, ["Help"],
-            `Get the help file for a given command, or a general help file explaining the game and the basics of how to play!`,
-                    
+            `Get the help file for a given command, or a general help file explaining the game and the basics of how to play!`,  
             `"help [command]" / "help"`,
             
             function(gameState: game_state, args: string[]): [string, game_state] {
