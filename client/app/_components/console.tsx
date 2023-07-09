@@ -142,10 +142,20 @@ export default function Console() {
                 inputField!.focus();
                 inputLabel!.classList.add("text-green-400");
                 inputLabel!.classList.remove("text-gray-500");
+                combineSpans(outputText.querySelectorAll(".console-line"));
             },
         })
         
     }, [outputText])
+    
+    //combine individual character spans back into spans consisting of words
+    function combineSpans(lines: NodeList) {
+        //for every line (different color code)
+        lines.forEach(line => {
+            const lineText = line.textContent; //gets the cumulative string from all children nodes
+            line.textContent = lineText; //removes all children of the node 
+        })
+    }
     
     function focusInput() {
         const input = document.getElementById("console-input");

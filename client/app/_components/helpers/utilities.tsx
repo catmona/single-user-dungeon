@@ -9,7 +9,7 @@
             
             //the string to be colored, or the entire string if no colors exist
             //line.textContent = t; 
-            line.className = "";
+            line.className = "console-line ";
             
             //check for color codes!
             let [firstWord, ...rest] = t.split(" ");
