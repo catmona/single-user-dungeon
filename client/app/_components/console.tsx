@@ -93,6 +93,25 @@ export default function Console() {
         }
     }, [historyIndex])
     
+    function handleArrows(event: KeyboardEvent) {
+        if(event.key == "ArrowUp" || event.key == "ArrowDown")
+            lookHistory(event);
+        else if(event.key == "ArrowLeft" || event.key == "ArrowRight")
+            event.preventDefault();
+    }
+    
+    // function moveCaret(event: KeyboardEvent) {
+    //     const caret = document.getElementById("console-caret");
+    //     if(!caret) return;
+        
+    //     if(event.key == "ArrowLeft") {
+            
+    //     }
+    //     else if(event.key == "ArrowRight") {
+            
+    //     }
+    // }
+    
     
     function lookHistory(event: KeyboardEvent) {
         if(event.key == "ArrowUp") {
@@ -173,7 +192,7 @@ export default function Console() {
                         <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
                         <input 
                             className="inline peer text-white ml-2 max-w-full font-mono caret-transparent bg-transparent focus:outline-none" 
-                            onKeyDown={e => lookHistory(e)} 
+                            onKeyDown={e => handleArrows(e)} 
                             autoFocus 
                             type="text" 
                             value={inputText} 
