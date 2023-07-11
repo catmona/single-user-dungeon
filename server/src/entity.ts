@@ -1,5 +1,5 @@
 export class Entity {
-    private name: string;
+    public name: string;
     public description: string;
     public content: string;
     public is: Record<string, boolean> = {}

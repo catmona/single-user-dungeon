@@ -1,5 +1,5 @@
 import { SignEntity } from "./entities/interactable";
-import { NutEntity } from "./entities/nut";
+import { AppleEntity, NutEntity } from "./entities/nut";
 import { SquirrelEntity } from "./entities/squirrel";
 import { parseCommand } from "./parser";
 import { WELCOME, game_message, game_state } from "./globals";
@@ -15,6 +15,7 @@ export function startGame(): string {
         new SquirrelEntity(),
         new NutEntity(),
         new SignEntity("wow! you can read without glasses!"),
+        new AppleEntity(),
     ]
 
     const end = new Room("end", "the finishing room");

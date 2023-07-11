@@ -183,7 +183,7 @@ export default function Console() {
     
     
     return(
-        <div className="m-2 font-mono pl-1" onClick={e => focusInput()}>
+        <div className="m-2 font-mono pl-1 text-md lg:text-lg" onClick={e => focusInput()}>
             <div className={styles.crt}>
                 {/* <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1> */}
                 <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">

@@ -31,7 +31,3 @@ export const HELP =
 `
 placeholder help message
 `
-
-export const otherPlayerName = "Placeholder";
-
-export const playerList = "Placeholder Player List"

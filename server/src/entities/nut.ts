@@ -7,3 +7,11 @@ export class NutEntity extends Entity {
         this.is.edible = true;
     }
 }
+
+export class AppleEntity extends Entity {
+    
+    constructor() {
+        super("Apple", "a red juicy apple!");
+        this.is.edible = true;
+    }
+}

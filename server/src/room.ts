@@ -108,11 +108,15 @@ export class Room {
     }
     
     //Prints entities one after the other.
-    //TODO: needs a/an formatting and different description for if an entity is inanimate or not.
     public printEntities(): string {
         let out = "";
+        const vowels = new Set<string>(['a', 'e', 'i', 'o', 'u']);
+        
         this.entities?.forEach(function(e: Entity) {
-            out += `There is a ${e.getName()} here.\n`
+            if(vowels.has(e.name.charAt(0).toLowerCase()))
+                out += `There is an ${e.getName()} here.\n`;
+            else
+                out += `There is a ${e.getName()} here.\n`;
         })
         
         return out;
