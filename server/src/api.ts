@@ -1,32 +1,17 @@
-import { SignEntity } from "./entities/interactable";
-import { AppleEntity, NutEntity } from "./entities/nut";
-import { SquirrelEntity } from "./entities/squirrel";
+import { SignEntity } from "./entities/written";
+import { AppleEntity, NutEntity } from "./entities/objects";
+import { SquirrelEntity } from "./entities/creatures";
 import { parseCommand } from "./parser";
 import { WELCOME, game_message, game_state } from "./globals";
 import { Room } from "./room";
 import { Command } from "./command";
+import { startRoom } from "./game";
 
 //returns the id of the starting room
 export function startGame(): string {
     Command.setupCommands();
     
-    const start = new Room("start", "a test room");
-    start.entities = [
-        new SquirrelEntity(),
-        new NutEntity(),
-        new SignEntity("wow! you can read without glasses!"),
-        new AppleEntity(),
-    ]
-
-    const end = new Room("end", "the finishing room");
-    const a = new SquirrelEntity();
-    const b = new NutEntity();
-    
-    end.entities = [
-        a, b
-    ]
-
-    start.setExit("N", end);  
+    const start = startRoom;
     
     return start.id;
 }
@@ -40,7 +25,7 @@ export function promptLogin(): game_message {
 export function login(startRoomId: string): game_message {
     let loginMessage = `#red Error fetching character - account has been permanently deleted. Creating new guest account and joining server...\n`;
     loginMessage += `                                                              \n`;
-    loginMessage += `#Welcome to the world of #yellow [Kenopsia]#! type "#red look#" to take a look around, and maybe "#red read#" the #red Sign#!`;
+    loginMessage += `#Welcome to the world of #yellow [Kenopsia]#! type "#red look#" or #red l# to take a look around, and #red help# if you're lost!`;
     
     return { message: loginMessage, roomId: startRoomId }
 }

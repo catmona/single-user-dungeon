@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { processText } from "./helpers/utilities";
 import { gsap } from "gsap";
 import styles from '../_styles/console.module.css'
@@ -18,6 +18,10 @@ export default function Console() {
     const [inputHistory, setInputHistory] = useState<string[]>([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     
+    const inputRef = useRef<HTMLInputElement>(null);
+    const caretRef = useRef<HTMLInputElement>(null);
+    const containerRef = useRef<HTMLInputElement>(null);
+    
     //get starting room when first loading page
     useEffect(() => {
         messageServer();
@@ -33,7 +37,7 @@ export default function Console() {
     
     //change width of input text field whenever input text changes
     useEffect(() => {
-        const input = document.getElementById("console-input");
+        const input = inputRef.current;
         if(input) input.style.width = inputText.length + "ch";
         
     }, [inputText]);
@@ -77,7 +81,6 @@ export default function Console() {
     
     //clears input text, changes roomID, and processess the output from the server
     function handleOutput(output: game_message) {
-        //TODO: handle errors
         setInputText(""); //clear input field
         setcurrentRoomId(output.roomId);
         setOutputText(processText(output.message, true));
@@ -129,7 +132,7 @@ export default function Console() {
     
     //whenever we get new output, add it to the output container log
     useEffect(() => {
-        const container = document.getElementById("output-container");
+        const container = containerRef.current;
         if(!container) return;
         
         //add new output to container
@@ -143,8 +146,8 @@ export default function Console() {
         if(!outputText) return;
         
         let toAnimate = outputText.querySelectorAll(".console-char");
-        let inputField = document.getElementById("console-input");
-        let inputLabel = document.getElementById("console-label");
+        let inputField = inputRef.current;
+        let inputLabel = caretRef.current;
         
         gsap.to(toAnimate, {
             opacity: 1,
@@ -177,7 +180,7 @@ export default function Console() {
     }
     
     function focusInput() {
-        const input = document.getElementById("console-input");
+        const input = inputRef.current;
         if(input) input.focus();
     }
     
@@ -187,7 +190,7 @@ export default function Console() {
             <div className={styles.crt}>
                 {/* <h1 className="text-lg font-extrabold">{currentRoomId.split("\"")[1] || "login"}</h1> */}
                 <div className="overflow-y-auto md:max-h-[80vh] max-h-[85vh]">
-                    <div id="output-container" className="block whitespace-pre-wrap break-words"></div>
+                    <div id="output-container" ref={containerRef} className="block whitespace-pre-wrap break-words"></div>
                     <form className="mt-8 w-full flex flex-row" onSubmit={handleSubmit}>
                         <label id="console-label" className="inline w-5 font-semibold text-green-400">{`>>`}</label>
                         <input 
@@ -198,8 +201,9 @@ export default function Console() {
                             value={inputText} 
                             onChange={handleChange}
                             id="console-input"
+                            ref={inputRef}
                         />
-                        <span id="console-caret" className="w-[1ch] bg-gray-200 h-[20px] inline-block animate-caret invisible peer-focus:visible"/>
+                        <span ref={caretRef} id="console-caret" className="w-[1ch] bg-gray-200 h-[20px] inline-block animate-caret invisible peer-focus:visible"/>
                     </form>
                 </div>
             </div>

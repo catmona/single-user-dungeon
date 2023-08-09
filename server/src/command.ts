@@ -106,6 +106,8 @@ export class Command {
 
                if (!(target1 instanceof UndefinedEntity || target2 instanceof UndefinedEntity))
                   return [Entity.feed(target1, target2), gameState];
+               else if (target2 instanceof UndefinedEntity)
+                  return ['Feed what to the ' + target1.getName() + "?", gameState];
                else return ['Feed what to what?', gameState];
             }
             //print message prompting the user to enter in arguments
