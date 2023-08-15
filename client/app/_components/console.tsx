@@ -3,7 +3,7 @@ import { processText } from "./helpers/utilities";
 import { gsap } from "gsap";
 import styles from '../_styles/console.module.css'
 
-const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = process.env.API;
 
 interface game_message {
     message: string;
