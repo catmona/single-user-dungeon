@@ -11,7 +11,7 @@ const port = process.env.PORT;
 const startRoomId = startGame();
 
 app.use(cors({
-  origin: 'http://localhost:3000/'
+  origin: process.env.CLIENT_ADDR
 }));
 
 app.use(express.json());
@@ -37,5 +37,5 @@ app.post('/api/message', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️[server]: Server is running on port ${port}`);
 });
