@@ -2,7 +2,9 @@ import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } fr
 import { processText } from "./helpers/utilities";
 import { gsap } from "gsap";
 import styles from '../_styles/console.module.css'
+import dotenv from 'dotenv';
 
+dotenv.config();
 const ENDPOINT = process.env.API;
 
 interface game_message {
