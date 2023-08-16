@@ -11,7 +11,8 @@ const port = process.env.PORT;
 const startRoomId = startGame();
 
 app.use(cors({
-  origin: process.env.CLIENT_ADDR
+  origin: process.env.CLIENT_ADDR,
+  credentials: true,
 }));
 
 app.use(express.json());
