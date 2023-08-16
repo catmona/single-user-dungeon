@@ -65,7 +65,7 @@ export default function Console() {
     }
     
     async function messageServer() {
-        fetch(ENDPOINT + "/api/message", {
+        fetch("https://kynopsia-serverside.onrender.com/api/message", {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
