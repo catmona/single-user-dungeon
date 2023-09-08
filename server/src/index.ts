@@ -9,9 +9,10 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 const startRoomId = startGame();
+console.log(process.env.CLIENT_ADDRESS)
 
 app.use(cors({
-  origin: process.env.CLIENT_ADDR,
+  origin: process.env.CLIENT_ADDRESS,
   credentials: true,
 }));
 

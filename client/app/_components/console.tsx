@@ -2,10 +2,8 @@ import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } fr
 import { processText } from "./helpers/utilities";
 import { gsap } from "gsap";
 import styles from '../_styles/console.module.css'
-import dotenv from 'dotenv';
 
-dotenv.config();
-const ENDPOINT = process.env.API;
+const ENDPOINT = process.env.NEXT_PUBLIC_API;
 
 interface game_message {
     message: string;
@@ -65,7 +63,7 @@ export default function Console() {
     }
     
     async function messageServer() {
-        fetch("https://kynopsia-serverside.onrender.com/api/message", {
+        fetch(ENDPOINT + 'api/message' || "https://kynopsia-serverside.onrender.com/api/message", {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({

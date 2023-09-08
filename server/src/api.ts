@@ -25,7 +25,7 @@ export function promptLogin(): game_message {
 export function login(startRoomId: string): game_message {
     let loginMessage = `#red Error fetching character - account has been permanently deleted. Creating new guest account and joining server...\n`;
     loginMessage += `                                                              \n`;
-    loginMessage += `#Welcome to the world of #yellow [Kenopsia]#! type "#red look#" or #red l# to take a look around, and #red help# if you're lost!`;
+    loginMessage += `#Welcome to the world of #yellow [Kynopsia]#! type "#red look#" or #red l# to take a look around, and #red help# if you're lost!`;
     
     return { message: loginMessage, roomId: startRoomId }
 }
